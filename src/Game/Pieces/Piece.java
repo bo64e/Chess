@@ -2,6 +2,8 @@ package Game.Pieces;
 
 import Game.Board;
 
+import java.util.List;
+
 public abstract class Piece {
     Coord position;
     Board board;
@@ -14,11 +16,15 @@ public abstract class Piece {
         this.board = board;
     }
 
-    public abstract Move[] GetMoves();
+    public abstract List<Move> GetMoves();
 
-    public abstract void Move();
+    public abstract void Move(Move move);
 
     public String GetSymbol(){
         return symbol;
+    }
+
+    public boolean GetColour(){
+        return colour;
     }
 }

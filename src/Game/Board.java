@@ -3,7 +3,7 @@ package Game;
 import Game.Pieces.*;
 
 public class Board {
-    Piece[][] board;
+    public Piece[][] board;
     public Board(){
         board = MakeBoard();
     }

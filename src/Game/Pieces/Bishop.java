@@ -2,6 +2,9 @@ package Game.Pieces;
 
 import Game.Board;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Bishop extends Piece{
     public Bishop(Coord position, boolean colour, Board board) {
         super(position, colour, board);
@@ -12,12 +15,12 @@ public class Bishop extends Piece{
     }
 
     @Override
-    public Move[] GetMoves() {
-        return new Move[0];
+    public List<Move> GetMoves() {
+        return new ArrayList<Move>();
     }
 
     @Override
-    public void Move() {
+    public void Move(Move move) {
 
     }
 }
