@@ -2,6 +2,8 @@ package Game;
 
 import Game.Pieces.*;
 
+import java.util.List;
+
 public class Board {
     public Piece[][] board;
     public Board(){
@@ -37,7 +39,6 @@ public class Board {
         _board[0][4] = new King(new Coord(4,0), false, this);
         _board[7][4] = new King(new Coord(4,7), true, this);
 
-        System.out.println(_board[0][3].GetSymbol());
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
                 if (y == 1){
@@ -61,6 +62,11 @@ public class Board {
                 System.out.print(board[y][x].GetSymbol());
             }
             System.out.println();
+        }
+        List<Move> moves = board[1][0].GetMoves();
+
+        for (int i = 0; i < moves.size(); i++) {
+            System.out.println(moves.get(i).ToFormat());
         }
     }
 }

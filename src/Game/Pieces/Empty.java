@@ -9,6 +9,7 @@ public class Empty extends Piece {
 
     public Empty(Coord position, boolean colour, Board board) {
         super(position, colour, board);
+        symbol = "-";
     }
 
     @Override
