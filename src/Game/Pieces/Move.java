@@ -1,8 +1,10 @@
 package Game.Pieces;
 
+import java.io.Console;
+
 public record Move(Coord start, Coord end, Piece moving, Piece capture, Move extramove){
     public Move(Coord start, Coord end, Piece moving, Piece capture){
-        this(start,end,capture,moving,null);
+        this(start,end,moving,capture,null);
     }
     public Move(Coord start, Coord end, Piece moving){
         this(start,end,moving,null,null);
@@ -21,9 +23,11 @@ public record Move(Coord start, Coord end, Piece moving, Piece capture, Move ext
     }
 
     public String ToFormat(Coord coord){
-        return "hi!";
+        String lets = "abcdefgh";
+        return lets.charAt(coord.x()) +Integer.toString(8- coord.y());
     }
+
     public String ToFormat(){
-        return ToFormat(this.end());
+        return ToFormat(end());
     }
 }

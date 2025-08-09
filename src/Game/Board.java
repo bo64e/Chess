@@ -52,6 +52,7 @@ public class Board {
                 }
             }
         }
+        _board[2][1] = new Pawn(new Coord(1,2), true, this);
 
         return _board;
     }
@@ -64,6 +65,7 @@ public class Board {
             System.out.println();
         }
         List<Move> moves = board[1][0].GetMoves();
+        System.out.println(board[1][0].GetSymbol());
 
         for (int i = 0; i < moves.size(); i++) {
             System.out.println(moves.get(i).ToFormat());

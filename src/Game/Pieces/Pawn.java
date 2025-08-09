@@ -20,16 +20,18 @@ public class Pawn extends Piece{
     @Override
     public List<Move> GetMoves() {
         List<Move> moves = new ArrayList<>();
-        int direction = colour ? 1 : -1;
+        int direction = !colour ? 1 : -1;
         for (int i = 1; (i <= 2 && !moved) || (i <= 1); i++) {
             try{
                 if (board.board[position.y()+(i*direction)][position.x()] instanceof Empty){
                     moves.add(new Move(position, new Coord(position.x(),position.y()+(i*direction)),this));
                 }
-            } catch (IndexOutOfBoundsException _) {}
+            } catch (IndexOutOfBoundsException _) {
+            }
         }
         AddCaptures(moves, direction);
-        return new ArrayList<>();
+
+        return moves;
     }
 
     public void AddCaptures(List<Move> moves, int direction){
@@ -58,6 +60,7 @@ public class Pawn extends Piece{
                 }
             }
         } catch (IndexOutOfBoundsException _) {}
+        EnPassant(moves, direction);
     }
 
     public void EnPassant(List<Move> moves, int direction){
