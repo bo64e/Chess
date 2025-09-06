@@ -1,5 +1,7 @@
 package Game.Pieces;
 
+import Game.BoardState;
+
 import java.io.Console;
 
 public record Move(Coord start, Coord end, Piece moving, Piece capture, Move extramove){
@@ -16,10 +18,13 @@ public record Move(Coord start, Coord end, Piece moving, Piece capture, Move ext
         this.moving = moving;
         this.capture = capture;
         this.extramove = extramove;
-
-        if (this.start() == this.end() || this.moving().position != this.start()){
+        if (this.start() == this.end() || !this.moving().position.isEqual(this.start())){
             throw new RuntimeException("Invalid Move");
         }
+    }
+
+    public Move Clone(BoardState board){
+        return new Move(start, end, board.At(moving().position), capture, extramove == null ? null : extramove.Clone(board));
     }
 
     public String ToFormat(Coord coord){

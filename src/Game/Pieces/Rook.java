@@ -1,26 +1,67 @@
 package Game.Pieces;
 
-import Game.Board;
+import Game.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Rook extends Piece {
-    public Rook(Coord position, boolean colour, Board board) {
+    public Rook(Coord position, Colour colour, BoardState board) {
         super(position, colour, board);
         symbol = "r";
-        if (colour){
+        if (colour == Colour.WHITE) {
             symbol = symbol.toUpperCase();
         }
     }
 
     @Override
-    public List<Move> GetMoves() {
-        return new ArrayList<Move>();
+    public Rook Copy(BoardState board){
+        Rook rook = new Rook(position, colour, board);
+        rook.symbol = symbol;
+        rook.moved = moved;
+        return rook;
     }
 
     @Override
-    public void Move(Move move) {
+    public List<Move> GetMoves() {
+        List<Move> moves = new ArrayList<>();
+        CheckDirection(moves, 1, 0);
+        CheckDirection(moves, -1, 0);
+        CheckDirection(moves, 0, 1);
+        CheckDirection(moves, 0, -1);
+        return moves;
+    }
 
+    public void CheckDirection(List<Move> moves, int i_x, int i_y) {
+        int i = 1;
+        while (position.x() + (i_x * i) >= 0 && position.x() + (i_x * i) < 8 &&
+                position.y() + (i_y * i) >= 0 && position.y() + (i_y * i) < 8) {
+
+            if (board.At(position.x() + (i * i_x), position.y() + (i * i_y)) instanceof Empty) {
+                moves.add(new Move(
+                        position,
+                        new Coord(position.x() + (i * i_x), position.y() + (i * i_y)),
+                        this
+                ));
+            } else if (board.At(position.x() + (i * i_x), position.y() + (i * i_y)).GetColour() != colour) {
+                moves.add(new Move(
+                        position,
+                        new Coord(position.x() + (i * i_x), position.y() + (i * i_y)),
+                        this,
+                        board.At(position.x() + (i * i_x), position.y() + (i * i_y))
+                ));
+                return;
+            } else {
+                return;
+            }
+            i++;
+        }
+    }
+
+    @Override
+    public boolean Move(Move move) {
+        if (!super.Move(move)){return false;}
+        moved = true;
+        return true;
     }
 }

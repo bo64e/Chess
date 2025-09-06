@@ -1,30 +1,48 @@
 package Game.Pieces;
 
-import Game.Board;
+import Game.*;
 
 import java.util.List;
 
 public abstract class Piece {
-    Coord position;
-    Board board;
+    public Coord position;
+    BoardState board;
     String symbol;
-    boolean moved = false;
-    boolean colour;
-    public Piece(Coord position, boolean colour, Board board) {
+    public boolean moved = false;
+    Colour colour;
+    public Piece(Coord position, Colour colour, BoardState board) {
         this.position = position;
         this.colour = colour;
         this.board = board;
     }
 
+    public abstract Piece Copy(BoardState board);
+
     public abstract List<Move> GetMoves();
 
-    public abstract void Move(Move move);
+    public boolean Move(Move move){
+        return this.Move(move, false);
+    }
+
+    public boolean Move(Move move, boolean skipchecks){
+        if (skipchecks){
+            position = move.end();
+            return true;
+        }
+        for (Move imove : this.GetMoves()){
+            if (imove.end().isEqual(move.end())){
+                position = move.end();
+                return true;
+            }
+        }
+        return false;
+    }
 
     public String GetSymbol(){
         return symbol;
     }
 
-    public boolean GetColour(){
+    public Colour GetColour(){
         return colour;
     }
 }
